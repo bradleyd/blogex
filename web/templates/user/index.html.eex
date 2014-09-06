@@ -1,0 +1,17 @@
+<div class="col-md-12">
+  <h3>Users</h3>
+
+  <ul>
+    <%= for user <- @users do %>
+      <li>
+        <a href="<%= Blogex.Router.user_path(:show, user.id) %>">
+          <%= user.content %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+
+  <a href="<%= Blogex.Router.user_path(:new) %>" class="btn btn-primary">
+    New User
+  </a>
+</div>

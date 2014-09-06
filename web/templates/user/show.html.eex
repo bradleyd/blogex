@@ -1,0 +1,21 @@
+<div class="col-md-12">
+
+  <a href="<%= Blogex.Router.user_path(:index) %>" class="btn btn-default btn-sm">
+    Back
+  </a>
+
+  <h1>
+    User: <%= @user.content %>
+  </h1>
+
+  <div class="actions">
+    <a href="<%= Blogex.Router.user_path(:edit, @user.id) %>" class="btn btn-primary">
+      Edit
+    </a>
+
+    <form action="/users/<%= @user.id %>" method="post">
+      <input type="hidden" name="_method" value="DELETE">
+      <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+  </div>
+</div>

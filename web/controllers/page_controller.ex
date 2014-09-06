@@ -1,15 +1,14 @@
 defmodule Blogex.PageController do
   use Phoenix.Controller
 
-  def index(conn, _params) do
-    render conn, "index"
+  def show(conn, %{"page" => "unauthorized"}) do
+    conn
+    |> assign_layout(:none)
+    |> render "unauthorized"
   end
 
-  def not_found(conn, _params) do
-    render conn, "not_found"
+  def show(conn, %{"page" => page}) do
+    render conn, "show", page: page
   end
 
-  def error(conn, _params) do
-    render conn, "error"
-  end
 end
