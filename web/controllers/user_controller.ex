@@ -37,7 +37,7 @@ defmodule Blogex.UserController do
       [] ->
         Blogex.Repo.update(user)
         # [g] really hacky way to redirect in the client.. (is there a better way?)
-        json conn, 201, JSON.encode!(%{location: Router.user_path(:show, user.id)})
+        redirect conn, Router.user_path(:show, user.id)
       errors ->
         json conn, errors: errors
     end
@@ -57,12 +57,13 @@ defmodule Blogex.UserController do
 
   def destroy(conn, %{"id" => id}) do
     user = Blogex.Repo.get(User, id)
+
     case user do
       user when is_map(user) ->
         Blogex.Repo.delete(user)
-        json conn, 200, JSON.encode!(%{location: Router.user_path(:index)})
+        redirect conn, Router.user_path(:index)
       _ ->
-        redirect conn, Router.page_path(:show, "unauthorized")
+        redirect conn, Router.page_path(page: "unauthorized")
     end
   end
 end
