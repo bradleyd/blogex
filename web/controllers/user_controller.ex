@@ -3,6 +3,7 @@ defmodule Blogex.UserController do
   alias Blogex.Router
   alias Blogex.User
 
+
   def index(conn, _params) do
     render conn, "index", users: Blogex.Repo.all(User)
   end

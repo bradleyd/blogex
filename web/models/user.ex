@@ -6,5 +6,8 @@ defmodule Blogex.User do
 
   schema "users" do
     field :content, :string
+    field :username, :string
+    field :password, :string
   end 
+
 end

@@ -13,7 +13,7 @@ defmodule Blogex.Mixfile do
   def application do
     [
       mod: { Blogex, [] },
-      applications: [:phoenix, :cowboy, :logger]
+      applications: [:phoenix, :cowboy, :logger, :bcrypt]
     ]
   end
 
@@ -27,7 +27,8 @@ defmodule Blogex.Mixfile do
       {:phoenix, github: "phoenixframework/phoenix"},
       {:cowboy, "~> 1.0.0"},
       {:postgrex, ">= 0.0.0"},
-      {:ecto, "~> 0.2.0"}
+      {:ecto, "~> 0.2.0"},
+      {:bcrypt, github: "opscode/erlang-bcrypt"}
     ]
   end
 end

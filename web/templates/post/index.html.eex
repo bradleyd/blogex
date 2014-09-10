@@ -1,0 +1,17 @@
+<div class="col-md-12">
+  <h3>Posts</h3>
+
+  <ul>
+    <%= for post <- @posts do %>
+      <li>
+        <a href="<%= Blogex.Router.post_path(:show, post.id) %>">
+          <%= post.title %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+
+  <a href="<%= Blogex.Router.post_path(:new) %>" class="btn btn-primary">
+    New Post
+  </a>
+</div>
