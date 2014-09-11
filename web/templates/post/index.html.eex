@@ -14,8 +14,9 @@
   <a href="<%= Blogex.Router.post_path(:new) %>" class="btn btn-primary">
     New Post
   </a>
-  <a href="/session/:id" class="btn btn-primary">
-    Logout
-  </a>
 
+    <form action="/session" method="post">
+      <input type="hidden" name="_method" value="DELETE">
+      <button type="submit" class="btn btn-primary">Logout</button>
+    </form>
 </div>

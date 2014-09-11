@@ -9,8 +9,10 @@ defmodule Blogex.SessionController do
     render conn, "new" 
   end
 
+  ## XXX Check password attempt
   def create(conn, %{"username" => username, "password" => password}) do
     user = Queries.user_query(username)
+    Blogex.Session.authenticate(password, user.password) 
     case List.first(user) do
       user when is_map(user) ->
         conn = put_session(conn, :authorized, true)
@@ -21,17 +23,13 @@ defmodule Blogex.SessionController do
   end
 
   def destroy(conn, _params) do
-    user = Blogex.Repo.get(User, id)
-
-    case List.first(user) do
-      user when is_map(user) ->
-        session = get_session(conn, :authorized)
-        if session do
-          conn = put_session(conn, :authorized, false)
-          redirect conn, Router.user_path(:index)
-        end
+    session = get_session(conn, :authorized)
+    case session do
+      true ->
+        conn = put_session(conn, :authorized, false)
+        redirect conn, Router.user_path(:index)
       _ ->
-        redirect conn, Router.page_path(page: "unauthorized")
+        text conn, "Could not remove your session"
     end
   end
 end
