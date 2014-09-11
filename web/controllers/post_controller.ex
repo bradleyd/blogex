@@ -5,7 +5,15 @@ defmodule Blogex.PostController do
 
 
   def index(conn, _params) do
-    render conn, "index", posts: Blogex.Repo.all(Post)
+    session = get_session(conn, :authorized)
+    #text conn, session
+    IO.inspect session
+    case session do
+      true ->
+        render conn, "index", posts: Blogex.Repo.all(Post)
+      _ ->
+        text conn, "Not authorized"
+    end
   end
   
   def show(conn, %{"post" => post}) do

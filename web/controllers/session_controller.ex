@@ -11,21 +11,25 @@ defmodule Blogex.SessionController do
 
   def create(conn, %{"username" => username, "password" => password}) do
     user = Queries.user_query(username)
-    case user do
+    case List.first(user) do
       user when is_map(user) ->
+        conn = put_session(conn, :authorized, true)
         redirect conn, Router.post_path(:index)
     _ ->
       text conn, "not authorized"
     end
   end
 
-  def destroy(conn, %{"id" => id}) do
+  def destroy(conn, _params) do
     user = Blogex.Repo.get(User, id)
 
-    case user do
+    case List.first(user) do
       user when is_map(user) ->
-        Blogex.Repo.delete(user)
-        redirect conn, Router.user_path(:index)
+        session = get_session(conn, :authorized)
+        if session do
+          conn = put_session(conn, :authorized, false)
+          redirect conn, Router.user_path(:index)
+        end
       _ ->
         redirect conn, Router.page_path(page: "unauthorized")
     end

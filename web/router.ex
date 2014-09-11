@@ -6,6 +6,7 @@ defmodule Blogex.Router do
     get "/pages/:page", PageController, :show, as: :page
     resources "/users", UserController
     resources "/posts", PostController
+    delete "/session", SessionController, :destroy
     resources "/session", SessionController
   end
 end

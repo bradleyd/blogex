@@ -2,6 +2,7 @@ defmodule Blogex.UserController do
   use Phoenix.Controller
   alias Blogex.Router
   alias Blogex.User
+  alias Blogex.Session
 
 
   def index(conn, _params) do
@@ -37,16 +38,15 @@ defmodule Blogex.UserController do
     case User.validate(user) do
       [] ->
         Blogex.Repo.update(user)
-        # [g] really hacky way to redirect in the client.. (is there a better way?)
         redirect conn, Router.user_path(:show, user.id)
       errors ->
         json conn, errors: errors
     end
   end
 
-  def create(conn, %{"user" => %{"content" => content}}) do
-    user = %User{content: content}
-
+  def create(conn, %{"user" => %{"username" => username, "password" => password, "content" => content}}) do
+    {:ok, pass } = Session.hash_password(password)
+    user = %User{username: username, password: to_string(pass), content: content}
     case User.validate(user) do
       [] ->
         user = Blogex.Repo.insert(user)

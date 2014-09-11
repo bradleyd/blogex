@@ -14,4 +14,8 @@
   <a href="<%= Blogex.Router.post_path(:new) %>" class="btn btn-primary">
     New Post
   </a>
+  <a href="/session/:id" class="btn btn-primary">
+    Logout
+  </a>
+
 </div>
