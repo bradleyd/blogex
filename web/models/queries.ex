@@ -5,6 +5,7 @@ defmodule Blogex.Queries do
     query = from u in Blogex.User,
             where: u.username == ^username,
             limit: 1
-    Blogex.Repo.all(query)
+    results = Blogex.Repo.all(query)
+    List.first(results)
   end
 end

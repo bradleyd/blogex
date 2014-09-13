@@ -9,16 +9,16 @@ defmodule Blogex.SessionController do
     render conn, "new" 
   end
 
-  ## XXX Check password attempt
   def create(conn, %{"username" => username, "password" => password}) do
     user = Queries.user_query(username)
-    Blogex.Session.authenticate(password, user.password) 
-    case List.first(user) do
-      user when is_map(user) ->
+    result = Blogex.Session.authenticate(password, user.password) 
+    
+    case result do
+      true ->
         conn = put_session(conn, :authorized, true)
         redirect conn, Router.post_path(:index)
-    _ ->
-      text conn, "not authorized"
+      _ ->
+        text conn, "not authorized"
     end
   end
 

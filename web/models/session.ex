@@ -5,6 +5,8 @@ defmodule Blogex.Session do
   end
 
   def authenticate(attempt, password) do
-    {ok, password} = :bcrypt.hashpw(attempt, password)
+    char_attempt = to_char_list(attempt)
+    char_password = to_char_list(password)
+    { :ok, char_password} == :bcrypt.hashpw(char_attempt, char_password)
   end
 end

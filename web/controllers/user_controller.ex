@@ -44,6 +44,7 @@ defmodule Blogex.UserController do
     end
   end
 
+  # Note: bcrypt returns hash as char list
   def create(conn, %{"user" => %{"username" => username, "password" => password, "content" => content}}) do
     {:ok, pass } = Session.hash_password(password)
     user = %User{username: username, password: to_string(pass), content: content}
