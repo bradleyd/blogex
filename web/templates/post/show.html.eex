@@ -1,0 +1,28 @@
+<div class="col-md-12">
+
+  <a href="<%= Blogex.Router.post_path(:index) %>" class="btn btn-default btn-sm">
+    Back
+  </a>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><%= @post.title%></h3>
+    </div>
+    <div class="panel-body">
+      <%= @post.content %>
+    </div>
+  </div>
+
+  <div class="actions">
+    <a href="<%= Blogex.Router.post_path(:edit, @post.id) %>" class="btn btn-primary">
+      Edit
+    </a>
+
+    <div class="form-group">
+    <form action="/posts/<%= @post.id %>" method="post">
+      <input type="hidden" name="_method" value="DELETE">
+      <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+  </div>
+  </div>
+</div>
