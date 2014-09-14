@@ -3,20 +3,33 @@ defmodule Blogex.PostController do
   alias Blogex.Router
   alias Blogex.Post
   alias Blogex.Repo
+  alias Blogex.ControllerUtils
 
+  #plug :authenticate_user!, usernames: ["jose", "eric", "sonny"]
 
-  def index(conn, _params) do
+  def authenticate_user!(conn, options) do
     session = get_session(conn, :authorized)
     case session do
       true ->
-        render conn, "index", posts: Blogex.Repo.all(Post)
+        conn
       _ ->
-        text conn, "Not authorized"
+        conn |> redirect(Router.session_path(:new))
+    end
+   
+  end
+
+  def index(conn, _params) do
+    session = ControllerUtils.authenticate_user!(conn)
+    if session do
+      render conn, "index", posts: Blogex.Repo.all(Post)
     end
   end
 
   def new(conn, _params) do
-    render conn, "new"
+    session = ControllerUtils.authenticate_user!(conn)
+    if session do
+      render conn, "new"
+    end
   end
   
   def edit(conn, %{"id" => id}) do
